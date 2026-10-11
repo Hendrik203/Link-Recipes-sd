@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rezepte-Sammlung</title>
+<link rel="stylesheet" href="style.css?v=6">
+</head>
+<body>
+
+<h1>Meine Rezepte</h1>
+<div class="syncbar" id="syncbar"></div>
+
+<form class="add" id="addForm">
+  <input type="url" id="urlInput" placeholder="TikTok-Link (oder YouTube, Instagram, anderer Link) einfügen" required>
+  <select id="tabSelect"></select>
+  <button class="primary" type="submit" id="addBtn">Hinzufügen</button>
+</form>
+
+<div class="tabs" id="tabs"></div>
+
+<input type="text" id="searchInput" class="search" placeholder="Suchen…" autocomplete="off" enterkeyhint="search">
+<div class="tabtools" id="tabtools"></div>
+<div id="list"></div>
+
+<button id="toTop" type="button" aria-label="Nach oben">↑</button>
+<div id="toast"></div>
+
+<script src="sync.js?v=6"></script>
+<script src="script.js?v=6"></script>
+</body>
+</html>
