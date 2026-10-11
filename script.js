@@ -2,11 +2,16 @@
 // Ohne sync.js (reine Browser-Version): immer bearbeiten, kein Abgleich über GitHub
 if (typeof canEdit === 'undefined') { var canEdit = () => true; }
 
-const KEY = 'rezepte-v1';
+// Alle Seiten unter demselben NAME.github.io teilen sich den Browser-Speicher. Damit eine zweite
+// Rezepte-Seite (ohne sync.js) nicht dieselben Rezepte zeigt, bekommt sie einen eigenen Speicherplatz
+// pro Repository-Namen. Die Sync-Version behält den bisherigen Speicherplatz (deine Rezepte bleiben).
+const SCOPE = (typeof REPO !== 'undefined' && REPO) ? '' : '-lokal-' + (location.pathname.split('/').filter(Boolean)[0] || 'root');
+const KEY = 'rezepte-v1' + SCOPE;
+const VIEW_KEY = 'rezepte-view' + SCOPE;
 let state = load();
 let active = 'Alle';
 let view = 'list';                 // 'list' = ganze Videos, 'tiles' = Kacheln
-try { view = localStorage.getItem('rezepte-view') || 'list'; } catch (e) {}
+try { view = localStorage.getItem(VIEW_KEY) || 'list'; } catch (e) {}
 let openId = null;                 // Rezept, das in der Kachel-Ansicht gerade geöffnet ist
 
 function load() {
@@ -268,7 +273,7 @@ document.getElementById('tabtools').addEventListener('click', async e => {
   } else if (b.id === 'viewBtn') {
     view = view === 'list' ? 'tiles' : 'list';
     openId = null;
-    try { localStorage.setItem('rezepte-view', view); } catch (e) {}
+    try { localStorage.setItem(VIEW_KEY, view); } catch (e) {}
     render();
   } else if (b.id === 'shareBtn') {
     const link = await shareLink();
